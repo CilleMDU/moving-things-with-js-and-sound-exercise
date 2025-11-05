@@ -1,6 +1,7 @@
 "use strict";
 
 const dodger = document.getElementById("dodger");
+const rock = document.getElementById("rock");
 
 
 document.addEventListener("keydown", function (event) {
@@ -16,6 +17,11 @@ function movingSound() {
     getMovement.play();
 }
 
+function deathSound() {
+  getDeath.currentTime = 0;
+  getDeath.play();
+}
+
 function moveDodgerLeft() {
   const leftNumbers = dodger.style.left.replace("px", "");
   const left = parseInt(leftNumbers, 10);
@@ -24,15 +30,20 @@ function moveDodgerLeft() {
     dodger.style.left = `${left - 1}px`;
     movingSound();
   }
+  else {
+    deathSound();
+  }
 }
 
 function moveDodgerRight() {
   const leftNumbers = dodger.style.left.replace("px", "");
   const left = parseInt(leftNumbers, 10);
 
-  if (left > 0) {
+  if (left < 360) {
     dodger.style.left = `${left + 1}px`;
     movingSound();
+  } else {
+    deathSound();
   }
 }
 
@@ -41,9 +52,11 @@ function moveDodgerUp() {
   const bottomNumbers = dodger.style.bottom.replace("px", "");
   const bottom = parseInt(bottomNumbers, 10);
 
-  if (bottom < 360) {
+  if (bottom < 380) {
     dodger.style.bottom = `${bottom + 1}px`;
     movingSound();
+  } else {
+    deathSound();
   }
 }
 
@@ -55,6 +68,8 @@ function moveDodgerDown() {
   if (bottom > 0) {
     dodger.style.bottom = `${bottom - 1}px`;
     movingSound();
+  } else {
+    deathSound();
   }
 }
 
